@@ -7,79 +7,21 @@ use Illuminate\Http\Request;
 
 class ColumnController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return Column::with('cards')->orderBy('order', 'asc')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function move(Request $request)
     {
-        //
-    }
+        if ($request->oldOrder == 0) {
+            Column::where('order', $request->oldOrder + 1)->update(['order' => $request->oldOrder]);
+            Column::where('order', $request->newOrder)->update(['order' => $request->newOrder - 1]);
+        } else {
+            Column::where('order', $request->newOrder)->update(['order' => $request->oldOrder]);
+        }
+        Column::find($request->id)->update(['order' => $request->newOrder]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return true;
     }
 }

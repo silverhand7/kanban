@@ -17,9 +17,11 @@ class ColumnFactory extends Factory
      */
     public function definition()
     {
+        $max = Column::count();
+        $order = ($max == 0) ? 0 : ($max + 1) - 1;
         return [
             'name' => fake()->words(rand(2, 3), true),
-            'order' => Column::max('order') + 1,
+            'order' => $order,
         ];
     }
 }

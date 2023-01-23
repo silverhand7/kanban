@@ -19,7 +19,8 @@ class CardFactory extends Factory
     public function definition()
     {
         $column = Column::inRandomOrder()->first();
-        $order = Card::where('column_id', $column->id)->max('order') + 1;
+        $max = Card::where('column_id', $column->id)->count();
+        $order = ($max == 0) ? 0 : ($max + 1) - 1;
         return [
             'column_id' => $column->id,
             'title' => fake()->words(rand(2, 6), true),

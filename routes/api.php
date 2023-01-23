@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('columns', [ColumnController::class, 'index']);
+Route::post('columns/move', [ColumnController::class, 'move']);

@@ -24,10 +24,9 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
-        Column::factory(3)->sequence(fn ($sequence) => [
-            'order' => $sequence->index + 1,
-        ])->create();
+        for ($i = 0; $i < 3; $i++) {
+            Column::factory()->create();
+        }
 
         for ($i = 0; $i < 20; $i++) {
             Card::factory()->create();
