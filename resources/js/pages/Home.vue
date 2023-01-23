@@ -1,5 +1,7 @@
 <template>
-    <Column title="Hello World" :items="items" />
+    <div class="columns">
+        <Column v-for="column in columns" :key="column.id" :title="column.name" :items="column.cards" />
+    </div>
     <h1>Home Page</h1>
 </template>
 
@@ -9,25 +11,16 @@ import Column from '../components/Column.vue';
 export default {
     data() {
         return {
-            items: [
-                {
-                    "id": 1,
-                    "title": 'Hello world'
-                },
-                {
-                    "id": 2,
-                    "title": 'Hello world 2'
-                },
-                {
-                    "id": 3,
-                    "title": 'Hello world 3'
-                }
-            ]
+            items: [],
+            columns: []
         }
     },
     components: {
         Column
-    }
+    },
+    async created() {
+        await axios.get('/api/columns').then(response => (this.columns = response.data));
+    },
 }
 
 </script>
