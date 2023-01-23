@@ -102,9 +102,11 @@ export default {
             });
         },
 
-        updateCard(id, title, columnId){
+        updateCard(id, title, description, columnId){
             let column = this.columns.find(column => column.id == columnId);
-            column.cards.find(card => card.id == id).title = title;
+            let card = column.cards.find(card => card.id == id)
+            card.title = title;
+            card.description = description;
         }
     }
 }

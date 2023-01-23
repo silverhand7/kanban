@@ -51,9 +51,9 @@ export default {
 
     methods: {
         deleteCard() {
-            this.$emit('deleteCard', this.id);
-            // if(confirm('are you sure?')) {
-            // }
+            if(confirm('are you sure?')) {
+                this.$emit('deleteCard', this.id);
+            }
         },
         close() {
             this.showForm = false;
@@ -68,7 +68,7 @@ export default {
                 title: this.newTitle,
                 description: this.newDescription
             }).then(response => {
-                this.$emit('updateCard', response.data.id, response.data.title, response.data.column_id);
+                this.$emit('updateCard', response.data.id, response.data.title, response.data.description, response.data.column_id);
                 this.showForm = false;
             });
         },
