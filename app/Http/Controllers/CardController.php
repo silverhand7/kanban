@@ -23,4 +23,9 @@ class CardController extends Controller
 
         return true;
     }
+
+    public function delete($id)
+    {
+        return Card::findOrFail($id)->delete();
+    }
 }

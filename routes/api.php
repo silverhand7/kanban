@@ -26,3 +26,4 @@ Route::put('column/{id}/update', [ColumnController::class, 'update'])->name('api
 Route::delete('column/{id}/delete', [ColumnController::class, 'destroy'])->name('api.column.delete');
 Route::post('column/move', [ColumnController::class, 'move'])->name('api.column.move');
 Route::post('card/move', [CardController::class, 'move'])->name('api.card.move');
+Route::delete('card/{id}/delete', [CardController::class, 'delete'])->name('api.card.delete');

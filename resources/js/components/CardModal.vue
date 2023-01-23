@@ -22,6 +22,13 @@ export default {
         id: Number,
         title: String,
         description: String
+    },
+    methods: {
+        deleteCard() {
+            this.$emit('deleteCard', this.id);
+            // if(confirm('are you sure?')) {
+            // }
+        }
     }
 }
 </script>

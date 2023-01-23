@@ -1,32 +1,34 @@
 <template>
-    <div class="column">
-        <div class="column__header" @click="showRenameForm">
-            <div class="column__header__title">
-                <div v-if="isForm == false">
-                    {{ title }}
+    <div>
+        <div class="column">
+            <div class="column__header" @click="showRenameForm">
+                <div class="column__header__title">
+                    <div v-if="isForm == false">
+                        {{ title }}
+                    </div>
+                    <div v-else>
+                        <input type="text" id="title" v-model="newName" v-on:keyup.enter="onEnter"> <button @click="save">Save</button>
+                    </div>
                 </div>
-                <div v-else>
-                    <input type="text" id="title" v-model="newName" v-on:keyup.enter="onEnter"> <button @click="save">Save</button>
-                </div>
+                <div class="remove-button" @click="$emit('removeColumn', id)">X</div>
             </div>
-            <div class="remove-button" @click="$emit('removeColumn', id)">X</div>
-        </div>
-        <div class="column__body">
-            <Draggable group="tasks" :list="items" @change="log($event, id)">
-                <CardItem
-                    v-for="item in items"
-                    :key="item.id"
-                    :id="item.id"
-                    :title="item.title"
-                    :description="item.description"
-                    @showCardModal="showCardModal"
-                >
-                    {{ item.title }}
-                </CardItem>
-            </Draggable>
-        </div>
-        <div class="column__footer">
-            <button class="button" @click="showCardModal">Add a card</button>
+            <div class="column__body">
+                <Draggable group="tasks" :list="items" @change="log($event, id)">
+                    <CardItem
+                        v-for="item in items"
+                        :key="item.id"
+                        :id="item.id"
+                        :title="item.title"
+                        :description="item.description"
+                        @showCardModal="showCardModal"
+                    >
+                        {{ item.title }}
+                    </CardItem>
+                </Draggable>
+            </div>
+            <div class="column__footer">
+                <button class="button" @click="showCardModal">Add a card</button>
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +37,7 @@
 import CardItem from './CardItem.vue';
 import Draggable from 'vuedraggable';
 import CardModal from './CardModal.vue';
+import axios from 'axios';
 
 export default {
     props: {
@@ -120,8 +123,23 @@ export default {
                     title: title,
                     description: description
                 },
+                {},
+                {},
+                {
+                    'delete-card': event => {
+                        console.log('hello');
+                    }
+                }
             );
+        },
+
+        deleteCard(cardId) {
+            console.log(cardId);
+            //await axios.delete(`api/card/${cardId}/delete`).then(res => this.$emit('removeCard', cardId));
         }
+    },
+    mount() {
+        this.showCardModal();
     }
 }
 

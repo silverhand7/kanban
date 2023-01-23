@@ -23,7 +23,6 @@ import Column from '../components/Column.vue';
 import Draggable from 'vuedraggable';
 import CardModal from '../components/CardModal.vue';
 
-
 export default {
     data() {
         return {
@@ -60,7 +59,7 @@ export default {
 
         updateColumn(id, newName) {
             this.columns.find(el => el.id == id).name = newName;
-        }
+        },
     }
 }
 
