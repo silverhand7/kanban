@@ -32,7 +32,10 @@ export default {
     props: {
         id: Number,
         title: String,
-        items: Array
+        items: {
+            default: [],
+            type: Array,
+        }
     },
     data() {
         return {
@@ -97,8 +100,7 @@ export default {
         },
 
         onEnter() {
-            // do save
-            alert('enter');
+            this.save();
         }
     }
 }
