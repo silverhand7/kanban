@@ -32,7 +32,6 @@ export default {
                 newOrder: evt.moved.newIndex,
                 oldOrder: evt.moved.oldIndex,
             })
-            window.console.log(evt);
         }
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('column_id');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->tinyInteger('order')->default(0);
+            $table->tinyInteger('order');
             $table->timestamps();
         });
     }
