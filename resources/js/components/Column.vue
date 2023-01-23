@@ -27,7 +27,7 @@
                 </Draggable>
             </div>
             <div class="column__footer">
-                <button class="button" @click="showCardModal">Add a card</button>
+                <button class="button" >Add a card</button>
             </div>
         </div>
     </div>
@@ -36,7 +36,6 @@
 <script>
 import CardItem from './CardItem.vue';
 import Draggable from 'vuedraggable';
-import CardModal from './CardModal.vue';
 import axios from 'axios';
 
 export default {
@@ -59,7 +58,6 @@ export default {
     components: {
         CardItem,
         Draggable,
-        CardModal
     },
     methods: {
         async log(evt, columnId) {
@@ -116,21 +114,7 @@ export default {
         },
 
         showCardModal(id, title, description) {
-            this.$modal.show(
-                CardModal,
-                {
-                    id: id,
-                    title: title,
-                    description: description
-                },
-                {},
-                {},
-                {
-                    'delete-card': event => {
-                        console.log('hello');
-                    }
-                }
-            );
+            this.$emit('showCardModal', id, title, description);
         },
 
         deleteCard(cardId) {
@@ -138,9 +122,6 @@ export default {
             //await axios.delete(`api/card/${cardId}/delete`).then(res => this.$emit('removeCard', cardId));
         }
     },
-    mount() {
-        this.showCardModal();
-    }
 }
 
 </script>

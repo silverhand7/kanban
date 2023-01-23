@@ -9,12 +9,16 @@
                     :items="column.cards"
                     @removeColumn="removeColumn"
                     @updateColumn="updateColumn"
+                    @showCardModal="showCardModal"
                 />
             </Draggable>
             <div>
                 <button class="add-new-button" @click="addNewColumn">+ Add new column</button>
             </div>
         </div>
+
+        <CardModal :id="cardId" :title="cardTitle" :description="cardDescription" :isOpen="isCardModalOpen" @close="cardId = 0"></CardModal>
+
     </div>
 </template>
 
@@ -27,7 +31,10 @@ export default {
     data() {
         return {
             items: [],
-            columns: []
+            columns: [],
+            cardId: 0,
+            cardTitle: '',
+            cardDescription: '',
         }
     },
     components: {
@@ -37,6 +44,14 @@ export default {
     },
     async created() {
         await axios.get('/api/columns').then(response => (this.columns = response.data));
+    },
+    computed: {
+        isCardModalOpen() {
+            if (this.cardId == '') {
+                return false
+            }
+            return true;
+        }
     },
     methods: {
         log(evt) {
@@ -59,6 +74,12 @@ export default {
 
         updateColumn(id, newName) {
             this.columns.find(el => el.id == id).name = newName;
+        },
+
+        showCardModal(id, title, description) {
+            this.cardId = id;
+            this.cardTitle = title;
+            this.cardDescription = description;
         },
     }
 }
