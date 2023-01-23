@@ -1,12 +1,15 @@
 <template>
-    <div class="columns">
-        <Column v-for="column in columns" :key="column.id" :id="column.id" :title="column.name" :items="column.cards" />
+    <div>
+        <Draggable class="columns" :list="columns">
+            <Column v-for="column in columns" :key="column.id" :id="column.id" :title="column.name" :items="column.cards" />
+        </Draggable>
+        <h1>Home Page</h1>
     </div>
-    <h1>Home Page</h1>
 </template>
 
 <script>
 import Column from '../components/Column.vue';
+import Draggable from 'vuedraggable';
 
 export default {
     data() {
@@ -17,6 +20,7 @@ export default {
     },
     components: {
         Column,
+        Draggable
     },
     async created() {
         await axios.get('/api/columns').then(response => (this.columns = response.data));
