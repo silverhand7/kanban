@@ -13,13 +13,20 @@
         </div>
         <div class="column__body">
             <Draggable group="tasks" :list="items" @change="log($event, id)">
-                <CardItem v-for="item in items" :key="item.id">
+                <CardItem
+                    v-for="item in items"
+                    :key="item.id"
+                    :id="item.id"
+                    :title="item.title"
+                    :description="item.description"
+                    @showCardModal="showCardModal"
+                >
                     {{ item.title }}
                 </CardItem>
             </Draggable>
         </div>
         <div class="column__footer">
-            <button class="button">Add a card</button>
+            <button class="button" @click="showCardModal">Add a card</button>
         </div>
     </div>
 </template>
@@ -27,6 +34,7 @@
 <script>
 import CardItem from './CardItem.vue';
 import Draggable from 'vuedraggable';
+import CardModal from './CardModal.vue';
 
 export default {
     props: {
@@ -47,10 +55,11 @@ export default {
     },
     components: {
         CardItem,
-        Draggable
+        Draggable,
+        CardModal
     },
     methods: {
-        log(evt, columnId) {
+        async log(evt, columnId) {
             if (evt.added != undefined || evt.moved != undefined) {
                 let type, id;
 
@@ -63,7 +72,7 @@ export default {
                     id = evt.moved.element.id;
                 }
 
-                axios.post('/api/card/move', {
+                await axios.post('/api/card/move', {
                    columnId: columnId,
                    id: id,
                    type: type,
@@ -101,6 +110,17 @@ export default {
 
         onEnter() {
             this.save();
+        },
+
+        showCardModal(id, title, description) {
+            this.$modal.show(
+                CardModal,
+                {
+                    id: id,
+                    title: title,
+                    description: description
+                },
+            );
         }
     }
 }

@@ -1,17 +1,19 @@
 <template>
-    <div class="columns-wrapper">
-        <Draggable class="columns" :list="columns" @change="log">
-            <Column v-for="column in columns"
-                :key="column.id"
-                :id="column.id"
-                :title="column.name"
-                :items="column.cards"
-                @removeColumn="removeColumn"
-                @updateColumn="updateColumn"
-            />
-        </Draggable>
-        <div>
-            <button class="add-new-button" @click="addNewColumn">+ Add new column</button>
+    <div>
+        <div class="columns-wrapper">
+            <Draggable class="columns" :list="columns" @change="log">
+                <Column v-for="column in columns"
+                    :key="column.id"
+                    :id="column.id"
+                    :title="column.name"
+                    :items="column.cards"
+                    @removeColumn="removeColumn"
+                    @updateColumn="updateColumn"
+                />
+            </Draggable>
+            <div>
+                <button class="add-new-button" @click="addNewColumn">+ Add new column</button>
+            </div>
         </div>
     </div>
 </template>
@@ -19,6 +21,8 @@
 <script>
 import Column from '../components/Column.vue';
 import Draggable from 'vuedraggable';
+import CardModal from '../components/CardModal.vue';
+
 
 export default {
     data() {
@@ -29,7 +33,8 @@ export default {
     },
     components: {
         Column,
-        Draggable
+        Draggable,
+        CardModal
     },
     async created() {
         await axios.get('/api/columns').then(response => (this.columns = response.data));

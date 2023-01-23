@@ -83,3 +83,18 @@
         background: #d9dadc;
     }
 }
+
+.card-modal {
+    width: 100%;
+    height: auto;
+    padding: 0px 20px;
+    box-sizing: border-box;
+
+    &__header {
+        border-bottom: 1px solid #d9dadc;
+        margin: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
