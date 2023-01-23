@@ -17,14 +17,17 @@
             </div>
         </div>
 
-        <CardModal
-            :id="cardId"
-            :title="cardTitle"
-            :description="cardDescription"
-            :isOpen="isCardModalOpen"
-            @close="cardId = 0"
-            @deleteCard="deleteCard"
-        />
+        <div v-if="cardId != 0">
+            <CardModal
+                :id="cardId"
+                :title="cardTitle"
+                :description="cardDescription"
+                :isOpen="isCardModalOpen"
+                @close="cardId = 0"
+                @deleteCard="deleteCard"
+                @updateCard="updateCard"
+            />
+        </div>
 
     </div>
 </template>
@@ -97,6 +100,11 @@ export default {
                 column.cards.splice(cardIndex, 1);
                 this.cardId = '';
             });
+        },
+
+        updateCard(id, title, columnId){
+            let column = this.columns.find(column => column.id == columnId);
+            column.cards.find(card => card.id == id).title = title;
         }
     }
 }

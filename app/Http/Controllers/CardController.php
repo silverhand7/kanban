@@ -24,6 +24,14 @@ class CardController extends Controller
         return true;
     }
 
+    public function update(Request $request, $id) {
+        $card = Card::findOrFail($id);
+        $card->title = $request->title;
+        $card->description = $request->description;
+        $card->save();
+        return $card;
+    }
+
     public function delete($id)
     {
         return Card::findOrFail($id)->delete();

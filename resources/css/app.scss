@@ -110,9 +110,23 @@
 
     &__header {
         border-bottom: 1px solid #d9dadc;
-        margin: 20px 0;
+        padding: 20px 0;
+        margin-bottom: 20px;
         display: flex;
+        gap: 20px;
         justify-content: space-between;
         align-items: center;
+        div:nth-child(1) {
+            flex-grow: 1;
+        }
+        h3 {
+            margin: 0;
+        }
     }
+}
+
+.text-modal {
+    width: 100%;
+    padding:5px 10px;
+    box-sizing: border-box;
 }
