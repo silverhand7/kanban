@@ -38,6 +38,12 @@ class ColumnController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id) {
+        return Column::find($id)->update([
+            'name' => $request->name
+        ]);
+    }
+
     public function destroy($id) {
         Card::where('column_id', $id)->delete();
         Column::find($id)->delete();

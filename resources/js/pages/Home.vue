@@ -7,6 +7,7 @@
                 :title="column.name"
                 :items="column.cards"
                 @removeColumn="removeColumn"
+                @updateColumn="updateColumn"
             />
         </Draggable>
         <div>
@@ -50,6 +51,10 @@ export default {
 
         async removeColumn(id) {
             await axios.delete(`/api/column/${id}/delete`).then(response => this.columns = this.columns.filter(column => column.id != id));
+        },
+
+        updateColumn(id, newName) {
+            this.columns.find(el => el.id == id).name = newName;
         }
     }
 }

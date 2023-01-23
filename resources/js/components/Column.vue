@@ -1,7 +1,14 @@
 <template>
     <div class="column">
-        <div class="column__header">
-            <div class="column__header__title">{{ title }} </div>
+        <div class="column__header" @click="showRenameForm">
+            <div class="column__header__title">
+                <div v-if="isForm == false">
+                    {{ title }}
+                </div>
+                <div v-else>
+                    <input type="text" id="title" v-model="newName" v-on:keyup.enter="onEnter"> <button @click="save">Save</button>
+                </div>
+            </div>
             <div class="remove-button" @click="$emit('removeColumn', id)">X</div>
         </div>
         <div class="column__body">
@@ -31,6 +38,8 @@ export default {
         return {
             added: [],
             removed: [],
+            isForm: false,
+            newName: this.title,
         }
     },
     components: {
@@ -68,6 +77,29 @@ export default {
             });
             return this.items;
         },
+
+        async showRenameForm() {
+            this.isForm = true;
+            await this.$nextTick()
+            document.getElementById('title').focus();
+        },
+
+        hideRenameForm() {
+            this.isForm = false;
+            this.$el.blur();
+        },
+
+        async save() {
+            await axios.put(`/api/column/${this.id}/update`, {
+                name: this.newName,
+            }).then(response => this.$emit('updateColumn', this.id, this.newName));
+            this.hideRenameForm();
+        },
+
+        onEnter() {
+            // do save
+            alert('enter');
+        }
     }
 }
 
