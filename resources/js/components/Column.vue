@@ -114,13 +114,8 @@ export default {
         },
 
         showCardModal(id, title, description) {
-            this.$emit('showCardModal', id, title, description);
+            this.$emit('showCardModal', id, title, description, this.id);
         },
-
-        deleteCard(cardId) {
-            console.log(cardId);
-            //await axios.delete(`api/card/${cardId}/delete`).then(res => this.$emit('removeCard', cardId));
-        }
     },
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="card-backdrop" @click="close" v-if="isOpen">
+    <div class="card-backdrop" @click.self="close" v-if="isOpen">
         <div class="card-modal">
             <div class="card-modal__header">
                 <div>

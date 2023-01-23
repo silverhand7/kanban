@@ -17,7 +17,14 @@
             </div>
         </div>
 
-        <CardModal :id="cardId" :title="cardTitle" :description="cardDescription" :isOpen="isCardModalOpen" @close="cardId = 0"></CardModal>
+        <CardModal
+            :id="cardId"
+            :title="cardTitle"
+            :description="cardDescription"
+            :isOpen="isCardModalOpen"
+            @close="cardId = 0"
+            @deleteCard="deleteCard"
+        />
 
     </div>
 </template>
@@ -76,11 +83,21 @@ export default {
             this.columns.find(el => el.id == id).name = newName;
         },
 
-        showCardModal(id, title, description) {
+        showCardModal(id, title, description, cardColumnId) {
             this.cardId = id;
             this.cardTitle = title;
             this.cardDescription = description;
+            this.cardColumnId = cardColumnId;
         },
+
+        async deleteCard(cardId) {
+            await axios.delete(`api/card/${cardId}/delete`).then(res => {
+                let column = this.columns.find(column => column.id == this.cardColumnId);
+                let cardIndex = column.cards.findIndex(card => card.id == this.cardId);
+                column.cards.splice(cardIndex, 1);
+                this.cardId = '';
+            });
+        }
     }
 }
 
