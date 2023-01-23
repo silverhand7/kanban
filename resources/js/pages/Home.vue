@@ -1,9 +1,17 @@
 <template>
-    <div>
+    <div class="columns-wrapper">
         <Draggable class="columns" :list="columns" @change="log">
-            <Column v-for="column in columns" :key="column.id" :id="column.id" :title="column.name" :items="column.cards" />
+            <Column v-for="column in columns"
+                :key="column.id"
+                :id="column.id"
+                :title="column.name"
+                :items="column.cards"
+                @removeColumn="removeColumn"
+            />
         </Draggable>
-        <h1>Home Page</h1>
+        <div>
+            <button class="add-new-button" @click="addNewColumn">+ Add new column</button>
+        </div>
     </div>
 </template>
 
@@ -27,11 +35,21 @@ export default {
     },
     methods: {
         log(evt) {
-            axios.post('/api/columns/move', {
+            axios.post('/api/column/move', {
                 id: evt.moved.element.id,
                 newOrder: evt.moved.newIndex,
                 oldOrder: evt.moved.oldIndex,
             })
+        },
+
+        async addNewColumn() {
+            await axios.post('/api/column/store', {
+                name: 'New Column',
+            }).then(response => (this.columns.push(response.data)));
+        },
+
+        async removeColumn(id) {
+            await axios.delete(`/api/column/${id}/delete`).then(response => this.columns = this.columns.filter(column => column.id != id));
         }
     }
 }

@@ -2,7 +2,7 @@
     <div class="column">
         <div class="column__header">
             <div class="column__header__title">{{ title }} </div>
-            <div class="remove-button">X</div>
+            <div class="remove-button" @click="$emit('removeColumn', id)">X</div>
         </div>
         <div class="column__body">
             <Draggable group="tasks" :list="items" @change="log($event, id)">
@@ -39,23 +39,27 @@ export default {
     },
     methods: {
         log(evt, columnId) {
-            if (evt.added != undefined) {
+            if (evt.added != undefined || evt.moved != undefined) {
+                let type, id;
+
+                if (evt.added != undefined) {
+                    type = 'added';
+                    id = evt.added.element.id;
+                }
+                if (evt.moved != undefined) {
+                    type = 'moved';
+                    id = evt.moved.element.id;
+                }
+
                 axios.post('/api/card/move', {
                    columnId: columnId,
-                   id: evt.added.element.id,
-                   type: 'added',
-                   cards: this.reOrder(columnId)
-               });
-            }
-            if (evt.moved != undefined) {
-                axios.post('/api/card/move', {
-                   columnId: columnId,
-                   id: evt.moved.element.id,
-                   type: 'moved',
+                   id: id,
+                   type: type,
                    cards: this.reOrder(columnId)
                });
             }
         },
+
         reOrder(newColumnId){
             this.items.forEach(function(el, index){
                 el['order'] = index;
@@ -63,7 +67,7 @@ export default {
 
             });
             return this.items;
-        }
+        },
     }
 }
 

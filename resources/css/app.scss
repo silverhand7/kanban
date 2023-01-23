@@ -1,5 +1,11 @@
+.columns-wrapper {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
+}
+
 .columns {
-    margin: auto;
     display: flex;
     gap: 20px;
     flex-wrap: nowrap;
@@ -59,4 +65,20 @@
     border-radius: 5px;
     min-height: 60px;
     margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.add-new-button {
+    background-color: #EBECF0;
+    border: 0;
+    padding: 20px;
+    border-radius: 5px;
+    min-width: 300px;
+    max-width: 300px;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background: #d9dadc;
+    }
 }

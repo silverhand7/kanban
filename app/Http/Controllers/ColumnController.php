@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Card;
 use App\Models\Column;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,24 @@ class ColumnController extends Controller
         }
         Column::find($request->id)->update(['order' => $request->newOrder]);
 
+        return true;
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        return Column::create([
+            'name' => $request->name,
+            'order' => Column::max('order') + 1,
+        ]);
+    }
+
+    public function destroy($id) {
+        Card::where('column_id', $id)->delete();
+        Column::find($id)->delete();
         return true;
     }
 }

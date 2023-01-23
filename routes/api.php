@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('columns', [ColumnController::class, 'index']);
-Route::post('columns/move', [ColumnController::class, 'move']);
-Route::post('card/move', [CardController::class, 'move']);
+Route::get('columns', [ColumnController::class, 'index'])->name('api.columns');
+Route::post('column/store', [ColumnController::class, 'store'])->name('api.column.store');
+Route::delete('column/{id}/delete', [ColumnController::class, 'destroy'])->name('api.column.delete');
+Route::post('column/move', [ColumnController::class, 'move'])->name('api.column.move');
+Route::post('card/move', [CardController::class, 'move'])->name('api.card.move');
