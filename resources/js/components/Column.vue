@@ -27,7 +27,7 @@
                 </Draggable>
             </div>
             <div class="column__footer">
-                <button class="button" >Add a card</button>
+                <button class="button" @click="showCardModalForm">Add a card</button>
             </div>
         </div>
     </div>
@@ -114,8 +114,12 @@ export default {
         },
 
         showCardModal(id, title, description) {
-            this.$emit('showCardModal', id, title, description, this.id);
+            this.$emit('showCardModal', id, title, description, this.id, true);
         },
+
+        showCardModalForm() {
+            this.$emit('showCardModalForm', this.id);
+        }
     },
 }
 

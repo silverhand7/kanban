@@ -10,6 +10,7 @@
                     @removeColumn="removeColumn"
                     @updateColumn="updateColumn"
                     @showCardModal="showCardModal"
+                    @showCardModalForm="showCardModalForm"
                 />
             </Draggable>
             <div>
@@ -17,13 +18,15 @@
             </div>
         </div>
 
-        <div v-if="cardId != 0">
+        <div v-if="isCardModalOpen == true">
             <CardModal
                 :id="cardId"
                 :title="cardTitle"
                 :description="cardDescription"
                 :isOpen="isCardModalOpen"
-                @close="cardId = 0"
+                :isShowForm="isShowCardForm"
+                :columnId="cardColumnId"
+                @close="closeCardModal"
                 @deleteCard="deleteCard"
                 @updateCard="updateCard"
             />
@@ -45,6 +48,8 @@ export default {
             cardId: 0,
             cardTitle: '',
             cardDescription: '',
+            isShowCard: false,
+            isShowCardForm: false,
         }
     },
     components: {
@@ -57,7 +62,7 @@ export default {
     },
     computed: {
         isCardModalOpen() {
-            if (this.cardId == '') {
+            if (this.isShowCard == false) {
                 return false
             }
             return true;
@@ -86,11 +91,12 @@ export default {
             this.columns.find(el => el.id == id).name = newName;
         },
 
-        showCardModal(id, title, description, cardColumnId) {
+        showCardModal(id, title, description, cardColumnId, isOpen) {
             this.cardId = id;
             this.cardTitle = title;
             this.cardDescription = description;
             this.cardColumnId = cardColumnId;
+            this.isShowCard = isOpen;
         },
 
         async deleteCard(cardId) {
@@ -98,15 +104,39 @@ export default {
                 let column = this.columns.find(column => column.id == this.cardColumnId);
                 let cardIndex = column.cards.findIndex(card => card.id == this.cardId);
                 column.cards.splice(cardIndex, 1);
-                this.cardId = '';
+                this.isShowCard = false;
             });
         },
 
         updateCard(id, title, description, columnId){
             let column = this.columns.find(column => column.id == columnId);
-            let card = column.cards.find(card => card.id == id)
-            card.title = title;
-            card.description = description;
+            let card = column.cards.find(card => card.id == id);
+            if (card !== undefined) {
+                card.title = title;
+                card.description = description;
+            } else {
+                column.cards.push({
+                    id: id,
+                    title: title,
+                    description: description,
+                    column_id: columnId
+                });
+            }
+        },
+
+        closeCardModal() {
+            this.isShowCard = false;
+            this.cardId = 0;
+            this.cardTitle = '';
+            this.cardDescription = '';
+            this.cardColumnId = '';
+            this.isShowCardForm = false;
+        },
+
+        showCardModalForm(cardColumnId) {
+            this.isShowCard = true;
+            this.isShowCardForm = true;
+            this.cardColumnId = cardColumnId;
         }
     }
 }

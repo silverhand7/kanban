@@ -24,6 +24,15 @@ class CardController extends Controller
         return true;
     }
 
+    public function store(Request $request) {
+        return Card::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'column_id' => $request->column_id,
+            'order' => Card::where('column_id', $request->column_id)->max('order') + 1,
+        ]);
+    }
+
     public function update(Request $request, $id) {
         $card = Card::findOrFail($id);
         $card->title = $request->title;

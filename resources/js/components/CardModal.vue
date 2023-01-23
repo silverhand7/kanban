@@ -3,10 +3,10 @@
         <div class="card-modal">
             <div class="card-modal__header">
                 <div>
-                    <h3 v-if="showForm == false">{{ newTitle }}</h3>
+                    <h3 v-if="newShowForm == false">{{ newTitle }}</h3>
                     <div v-else><input type="text" class="text-modal" v-model="newTitle"></div>
                 </div>
-                <div v-if="showForm == false">
+                <div v-if="newShowForm == false">
                     <button @click="editForm">Edit</button>
                     <button @click="deleteCard">Delete</button>
                 </div>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="card-modal__body">
-                <div v-if="showForm == false">
+                <div v-if="newShowForm == false">
                     {{ newDescription }}
                 </div>
                 <div v-else>
@@ -29,7 +29,6 @@
 <script>
 import axios from 'axios';
 
-
 export default {
     props: {
         id: Number,
@@ -39,14 +38,23 @@ export default {
             default: false,
             type: Boolean
         },
+        isShowForm: {
+            default: false,
+            type: Boolean,
+        },
+        columnId: Number,
     },
 
     data() {
         return {
-            showForm: false,
+            newShowForm: this.isShowForm,
             newTitle: this.title,
             newDescription: this.description,
         }
+    },
+
+    created() {
+        console.log(this.columnId);
     },
 
     methods: {
@@ -56,21 +64,32 @@ export default {
             }
         },
         close() {
-            this.showForm = false;
+            this.newShowForm = false;
             this.$emit('close');
         },
         editForm() {
-            this.showForm = true;
+            this.newShowForm = true;
         },
 
         async saveForm(){
-            await axios.put(`/api/card/${this.id}/update`, {
-                title: this.newTitle,
-                description: this.newDescription
-            }).then(response => {
-                this.$emit('updateCard', response.data.id, response.data.title, response.data.description, response.data.column_id);
-                this.showForm = false;
-            });
+            if (this.id != 0) {
+                await axios.put(`/api/card/${this.id}/update`, {
+                    title: this.newTitle,
+                    description: this.newDescription
+                }).then(response => {
+                    this.$emit('updateCard', response.data.id, response.data.title, response.data.description, response.data.column_id);
+                    this.newShowForm = false;
+                });
+            } else {
+                await axios.post(`/api/card/store`, {
+                    title: this.newTitle,
+                    description: this.newDescription,
+                    column_id: this.columnId,
+                }).then(response => {
+                    this.$emit('updateCard', response.data.id, response.data.title, response.data.description, response.data.column_id);
+                    this.newShowForm = false;
+                });
+            }
         },
     },
 }
