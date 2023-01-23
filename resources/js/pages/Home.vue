@@ -1,23 +1,33 @@
 <template>
-    <div class="column">
-        <div class="column__header">
-            <div class="column__header__title">Title</div>
-            <div class="remove-button">X</div>
-        </div>
-        <div class="column__body">
-            <div class="card">
-                Lorem Ipsum Title
-            </div>
-            <div class="card">
-                Lorem Ipsum Title
-            </div>
-            <div class="card">
-                Lorem Ipsum Title
-            </div>
-        </div>
-        <div class="column__footer">
-            <button class="button">Add a card</button>
-        </div>
-    </div>
+    <Column title="Hello World" :items="items" />
     <h1>Home Page</h1>
 </template>
+
+<script>
+import Column from '../components/Column.vue';
+
+export default {
+    data() {
+        return {
+            items: [
+                {
+                    "id": 1,
+                    "title": 'Hello world'
+                },
+                {
+                    "id": 2,
+                    "title": 'Hello world 2'
+                },
+                {
+                    "id": 3,
+                    "title": 'Hello world 3'
+                }
+            ]
+        }
+    },
+    components: {
+        Column
+    }
+}
+
+</script>
