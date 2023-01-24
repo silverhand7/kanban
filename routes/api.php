@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ColumnController;
+use App\Http\Controllers\ExportDBController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,5 @@ Route::post('card/move', [CardController::class, 'move'])->name('api.card.move')
 Route::post('card/store', [CardController::class, 'store'])->name('api.card.store');
 Route::put('card/{id}/update', [CardController::class, 'update'])->name('api.card.update');
 Route::delete('card/{id}/delete', [CardController::class, 'delete'])->name('api.card.delete');
+
+Route::post('export-db', [ExportDBController::class, 'export']);
