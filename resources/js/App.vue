@@ -13,7 +13,15 @@
 export default {
   methods: {
     async exportDB() {
-      await axios.post('/api/export-db').then(response => console.log('done'));
+      await axios.post('/api/export-db').then(res => {
+        let blob = new Blob([res.data])
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'dump.sql'
+        link.click()
+
+        console.log('done')
+      });
     }
   }
 }
