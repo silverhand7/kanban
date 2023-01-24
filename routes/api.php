@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiCardController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ColumnController;
 use App\Http\Controllers\ExportDBController;
@@ -32,3 +33,5 @@ Route::put('card/{id}/update', [CardController::class, 'update'])->name('api.car
 Route::delete('card/{id}/delete', [CardController::class, 'delete'])->name('api.card.delete');
 
 Route::post('export-db', [ExportDBController::class, 'export']);
+
+Route::get('/list-card', [ApiCardController::class, 'get']);
