@@ -11,6 +11,7 @@ class ExportDBController extends Controller
         ->setDbName(env('DB_DATABASE'))
         ->setUserName(env('DB_USERNAME'))
         ->setPassword(env('DB_PASSWORD'))
+        ->setHost(env('DB_HOST'))
         ->dumpToFile('dump.sql');
     }
 }
