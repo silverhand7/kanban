@@ -32,10 +32,12 @@ class ColumnController extends Controller
             'name' => 'required'
         ]);
 
-        return Column::create([
+        $columnId = Column::create([
             'name' => $request->name,
             'order' => Column::max('order') + 1,
-        ]);
+        ])->id;
+
+        return Column::with('cards')->find($columnId);
     }
 
     public function update(Request $request, $id) {
