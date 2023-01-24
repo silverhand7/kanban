@@ -19,6 +19,7 @@
                     :description="cardDescription"
                     :columnId="cardColumnId"
                     :isOpen="true"
+                    @deleteCard="deleteCard"
                 />
             </div>
         </div>
@@ -59,5 +60,16 @@ export default {
             this.resolved = true;
         });
     },
+    methods: {
+        async deleteCard(cardId) {
+            await axios.delete(`api/card/${cardId}/delete`).then(res => {
+                // let column = this.columns.find(column => column.id == this.cardColumnId);
+                // let cardIndex = column.cards.findIndex(card => card.id == this.cardId);
+                // column.cards.splice(cardIndex, 1);
+                // this.isShowCard = false;
+                this.$router.push('/');
+            });
+        },
+    }
 }
 </script>

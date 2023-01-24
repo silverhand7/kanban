@@ -66,7 +66,8 @@ export default {
         close() {
             this.newShowForm = false;
             this.$emit('close');
-            this.$router.push('/');
+            //this.$router.push('/');
+            window.location.href = '/';
         },
         editForm() {
             this.newShowForm = true;
