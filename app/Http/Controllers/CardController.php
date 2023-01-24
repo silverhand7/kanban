@@ -24,6 +24,11 @@ class CardController extends Controller
         return true;
     }
 
+    public function show($id)
+    {
+        return Card::findOrFail($id);
+    }
+
     public function store(Request $request) {
         return Card::create([
             'title' => $request->title,

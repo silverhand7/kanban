@@ -8,11 +8,14 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: () => import('./pages/Home.vue')
-        },
-        {
-            path: '/test',
-            component: () => import('./pages/Test.vue')
+            component: () => import('./pages/Home.vue'),
+            children: [
+                {
+                    path: ':id',
+                    component: () => import('./pages/Card.vue'),
+                    props: true
+                }
+            ]
         },
     ],
 });

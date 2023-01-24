@@ -114,7 +114,7 @@ export default {
         },
 
         showCardModal(id, title, description) {
-            this.$emit('showCardModal', id, title, description, this.id, true);
+            // this.$emit('showCardModal', id, title, description, this.id, true);
         },
 
         showCardModalForm() {
