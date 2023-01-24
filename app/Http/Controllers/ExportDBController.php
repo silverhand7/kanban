@@ -13,8 +13,8 @@ class ExportDBController extends Controller
         ->setUserName(env('DB_USERNAME'))
         ->setPassword(env('DB_PASSWORD'))
         ->setHost(env('DB_HOST'))
-        ->dumpToFile(public_path('dump.sql'));
+        ->dumpToFile('dump.sql');
 
-        return Storage::download(public_path('dump.sql'));
+        return Storage::download('dump.sql');
     }
 }
