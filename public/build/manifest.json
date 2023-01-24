@@ -5,11 +5,11 @@
     "isEntry": true
   },
   "resources/js/app.css": {
-    "file": "assets/app-149ebfcc.css",
+    "file": "assets/app-647aef9d.css",
     "src": "resources/js/app.css"
   },
   "resources/js/pages/Test.vue": {
-    "file": "assets/Test-afaaa490.js",
+    "file": "assets/Test-b666ce96.js",
     "src": "resources/js/pages/Test.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -17,7 +17,7 @@
     ]
   },
   "resources/js/pages/Home.vue": {
-    "file": "assets/Home-b048d37e.js",
+    "file": "assets/Home-b1446ad6.js",
     "src": "resources/js/pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -25,7 +25,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-d5fe2038.js",
+    "file": "assets/app-3d8eb425.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
@@ -33,7 +33,7 @@
       "resources/js/pages/Test.vue"
     ],
     "css": [
-      "assets/app-149ebfcc.css"
+      "assets/app-647aef9d.css"
     ]
   }
 }

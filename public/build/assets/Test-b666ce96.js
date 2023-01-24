@@ -1,0 +1,1 @@
+import{n as r}from"./app-3d8eb425.js";const _={};var t=function(){var n=this;return n._self._c,n._m(0)},s=[function(){var e=this,n=e._self._c;return n("div",[n("h1",[e._v("Test Page")])])}],a=r(_,t,s,!1,null,null,null,null);const o=a.exports;export{o as default};
