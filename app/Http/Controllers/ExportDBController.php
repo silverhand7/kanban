@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ExportDBController extends Controller
 {
@@ -12,8 +13,8 @@ class ExportDBController extends Controller
         ->setUserName(env('DB_USERNAME'))
         ->setPassword(env('DB_PASSWORD'))
         ->setHost(env('DB_HOST'))
-        ->dumpToFile('dump.sql');
+        ->dumpToFile(public_path('dump.sql'));
 
-        return response()->download('dump.sql');
+        return Storage::download(public_path('dump.sql'));
     }
 }
